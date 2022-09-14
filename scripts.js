@@ -6,6 +6,12 @@ var randomHex
 //event listeners
 // on page load, create new instance of Palette
 
+// window.addEventListener('click', function () {
+//   currentPalette.lockColor();
+// });
+// ^^^^replace window with new variable and uncomment
+
+
 function makeRandomNumber(array) {
   return Math.floor(Math.random() * hexArray.length);
 }
@@ -32,7 +38,7 @@ class Color {
   // }
 }
 
-class Palette { //WIP - not sure right direction
+class Palette {
   constructor() {
     this.color1 = new Color(makeRandomHex())
     this.color2 = new Color(makeRandomHex())
@@ -41,25 +47,27 @@ class Palette { //WIP - not sure right direction
     this.color5 = new Color(makeRandomHex())
     this.ID = Date.now()
   }
-  lockColor(event) {
+  lockColor() {
+    var targetColorID = event.target.id
     var paletteKeys = Object.keys(this)
-    console.log(paletteKeys);
-    console.log(this["color1"]);
-    console.log(this["color1"].locked);
-    // for (var i = 0; i < paletteKeys.length-1; i++) {
-    //   if (event.target.id === paletteKeys[i]) {
-    //     this[paletteKeys[i].locked] = true;
-    //   }
-    // }
-    // ^^^ incomplete - still need the event target on 'click' event to access the ID of the node to match to the color key, may need HTML update
+    // console.log(Object.keys(this));
+    // console.log(paletteKeys[0]);
+    // console.log(this["color1"]);
+    // console.log(this.color1);
+    // console.log(this["box1"].locked);
+    // console.log(targetColorID);
+    for (var i = 0; i < paletteKeys.length-1; i++) {
+      if (targetColorID === paletteKeys[i]) {
+        // console.log(targetColorID === paletteKeys[i]);
+        // console.log(i);
+        // console.log(targetColorID);
+        // console.log(paletteKeys[i]);
+        // console.log(this[paletteKeys[i]].locked);
+        this[paletteKeys[i]].locked = true;
+      }
+    }
   }
-  addHexToColors() {
-    this.color1.makeRandomHex();
-    this.color2.makeRandomHex();
-    this.color3.makeRandomHex();
-    this.color4.makeRandomHex();
-    this.color5.makeRandomHex();
-  }
+
   addNewColors() {
     if (this.color1.locked === false) {
       this.color1 = new Color(makeRandomHex())

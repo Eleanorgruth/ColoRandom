@@ -9,11 +9,14 @@ var randomHex
 var colorDisplay = document.querySelector('.color-display')
 var colorBox = document.querySelectorAll('.color-box')
 var newPaletteButton = document.querySelector('#new-palette')
+var savePaletteButton =  document.querySelector('#save-palette')
+var savedPaletteSection = document.querySelector('.saved-palette-section')
 
 //event listeners -------------------->
 window.addEventListener('load', displayRandomPalette)
 // on page load, create new instance of Palette
 newPaletteButton.addEventListener('click', displayRandomPalette)
+savePaletteButton.addEventListener('click', displaySavedPalette)
 // window.addEventListener('click', function () {
 //   currentPalette.lockColor();
 // });
@@ -119,9 +122,15 @@ function displayRandomPalette() {
     // colorBox[i].id.background = `${currentPalette[colors[i]].hexCode}`
     // console.log(colorBox[i].id.background)
 
-//Problem: how do we change the background inside
   }
-
-
-
 }
+
+function displaySavedPalette() {
+    savedPaletteSection.innerHTML +=
+    `
+        <section class="color-box ${colors[i]} mini-palette" style="background:${currentPalette[colors[i]].hexCode}"></section>
+
+      `
+}
+//if a user clicks savePaletteButton, we want the palette to add mini palette
+// to its class list. THEN display to savedPaletteSection

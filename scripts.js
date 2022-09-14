@@ -1,9 +1,15 @@
+//global and query stuf ------------------------->
+
 var hexArray = ['A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']  //does this need to be inside Color class?
 
 var currentPalette
 var randomHex
 
-//event listeners
+var colorDisplay = document.querySelector('.color-display')
+var colorBox = document.querySelectorAll('.color-box')
+
+//event listeners -------------------->
+window.addEventListener('load', displayRandomPalette)
 // on page load, create new instance of Palette
 
 // window.addEventListener('click', function () {
@@ -85,5 +91,27 @@ class Palette {
       this.color5 = new Color(makeRandomHex())
     }
   }
+
+}
+
+function displayRandomPalette() {
+  currentPalette = new Palette()
+  var colors = Object.keys(currentPalette)
+
+  colorDisplay.innerHTML = ''
+   for (var i = 0; i < 5; i++) {
+    console.log(currentPalette[colors[i]].hexCode)
+    colorDisplay.innerHTML += `
+    <div class="color-hex-lock" id="section${i + 1}">
+    <section class="color-box" id="${colors[i]}"></section>
+    <div class="hex-lock">
+      <p class="hex-value" id="hex${i+1}">${currentPalette[colors[i]].hexCode}</p>
+      <button class="lock-button" id="unlock${i+1}">🔓</button>
+    </div>
+    </div>
+    ` 
+  }
+
+
 
 }

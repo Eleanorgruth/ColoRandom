@@ -10,6 +10,7 @@ function makeRandomNumber(array) {
   return Math.floor(Math.random() * hexArray.length);
 }
 
+
 class Color {
   constructor() {
     this.locked = false;
@@ -26,21 +27,24 @@ class Color {
 }
 
 class Palette { //WIP - not sure right direction
-  constructor(color1, color2, color3, color4, color5) {
-    this.color1 = color1;
-    this.color2 = color2;
-    this.color3 = color3;
-    this.color4 = color4;
-    this.color5 = color5;
-    this.ID = '';
+  constructor(newColor) {
+    this.color1 = new Color()
+    this.color2 = new Color()
+    this.color3 = new Color()
+    this.color4 = new Color()
+    this.color5 = new Color()
+    this.ID = Date.now()
   }
-}
+  addColorToPalette() {
+    this.color1.makeRandomHex();
+    this.color2.makeRandomHex();
+    this.color3.makeRandomHex();
+    this.color4.makeRandomHex();
+    this.color5.makeRandomHex();
+  }
+  lockColor1(colorNumber) {
+    colorNumber.locked = true
+  }
 
 
-// potential function, still writing out Palette class
-// function makeNewPalette()
-//   var color1 = new Color;
-//   color1.makeRandomHex()
-//
-//   currentPalette = new Palette(color1, )
 }

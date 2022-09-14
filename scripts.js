@@ -23,17 +23,19 @@ class Color {
       this.hexCode = randomHex.join('');
     }
   }
-
 }
 
 class Palette { //WIP - not sure right direction
-  constructor(newColor) {
+  constructor() {
     this.color1 = new Color()
     this.color2 = new Color()
     this.color3 = new Color()
     this.color4 = new Color()
     this.color5 = new Color()
     this.ID = Date.now()
+  }
+  lockColor(this) {
+    colorNumber.locked = true
   }
   addColorToPalette() {
     this.color1.makeRandomHex();
@@ -42,9 +44,4 @@ class Palette { //WIP - not sure right direction
     this.color4.makeRandomHex();
     this.color5.makeRandomHex();
   }
-  lockColor1(colorNumber) {
-    colorNumber.locked = true
-  }
-
-
 }

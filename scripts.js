@@ -3,15 +3,17 @@
 var hexArray = ['A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']  //does this need to be inside Color class?
 
 var currentPalette
+//this is our data model
 var randomHex
 
 var colorDisplay = document.querySelector('.color-display')
 var colorBox = document.querySelectorAll('.color-box')
+var newPaletteButton = document.querySelector('#new-palette')
 
 //event listeners -------------------->
 window.addEventListener('load', displayRandomPalette)
 // on page load, create new instance of Palette
-
+newPaletteButton.addEventListener('click', displayRandomPalette)
 // window.addEventListener('click', function () {
 //   currentPalette.lockColor();
 // });
@@ -100,7 +102,7 @@ function displayRandomPalette() {
 
   colorDisplay.innerHTML = ''
    for (var i = 0; i < 5; i++) {
-    //console.log(currentPalette[colors[i]].hexCode)
+    console.log(currentPalette[colors[i]].hexCode)
     colorDisplay.innerHTML += `
     <div class="color-hex-lock" id="section${i + 1}">
     <section class="color-box ${colors[i]}" style="background:${currentPalette[colors[i]].hexCode}"></section>

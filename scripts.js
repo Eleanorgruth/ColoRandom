@@ -100,16 +100,24 @@ function displayRandomPalette() {
 
   colorDisplay.innerHTML = ''
    for (var i = 0; i < 5; i++) {
-    console.log(currentPalette[colors[i]].hexCode)
+    //console.log(currentPalette[colors[i]].hexCode)
     colorDisplay.innerHTML += `
     <div class="color-hex-lock" id="section${i + 1}">
-    <section class="color-box" id="${colors[i]}"></section>
+    <section class="color-box ${colors[i]}" style="background:${currentPalette[colors[i]].hexCode}"></section>
     <div class="hex-lock">
       <p class="hex-value" id="hex${i+1}">${currentPalette[colors[i]].hexCode}</p>
       <button class="lock-button" id="unlock${i+1}">🔓</button>
     </div>
     </div>
-    ` 
+    `
+    // colorBox[i].styles.backgroundColor = `${currentPalette[colors[i]].hexCode}`
+    // console.log(colorBox[i].style.backgroundColor)
+    // console.log(`${currentPalette[colors[i]].hexCode}`)
+    // console.log(`before: ${colorBox[i].id.background}`)
+    // colorBox[i].id.background = `${currentPalette[colors[i]].hexCode}`
+    // console.log(colorBox[i].id.background)
+
+//Problem: how do we change the background inside
   }
 
 

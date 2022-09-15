@@ -5,6 +5,7 @@ var hexArray = ['A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6',
 var currentPalette
 //this is our data model
 var randomHex
+var savedPalettes = []
 
 var colorDisplay = document.querySelector('.color-display')
 var colorBox = document.querySelectorAll('.color-box')
@@ -153,18 +154,26 @@ function newColorSet(currentPalette) {
 }
 
 function displaySavedPalette() {
+  savedPalettes.push(currentPalette)
+  savedPaletteSection.innerHTML = ""
+  for (var i = 0; i < savedPalettes.length; i++) {
   savedPaletteSection.innerHTML +=
-    `<div class="palette-group">
-        <section class="color-box mini-palette" id="color4"></section>
-        <section class="color-box mini-palette" id="color4"></section>
-        <section class="color-box mini-palette" id="color4"></section>
-        <section class="color-box mini-palette" id="color4"></section>
-        <section class="color-box mini-palette" id="color4"></section>
-        <button class="delete-button lock-button mini-palette">🗑</button>
-    </div>`
+  `<div class="palette-group">
+  <section class="color-box mini-palette" style="background:${savedPalettes[i].color1.hexCode}"></section>
+  <section class="color-box mini-palette" style="background:${savedPalettes[i].color2.hexCode}"></section>
+  <section class="color-box mini-palette" style="background:${savedPalettes[i].color3.hexCode}"></section>
+  <section class="color-box mini-palette" style="background:${savedPalettes[i].color4.hexCode}"></section>
+  <section class="color-box mini-palette" style="background:${savedPalettes[i].color5.hexCode}"></section>
+  <button class="delete-button lock-button mini-palette">🗑</button>
+  </div>`
+}
+displayRandomPalette()
+}
 
+
+//when user clicks the savedPalette button, there are duplicates - revisit
 
     // `<section class="color-box ${colors[i]} mini-palette" style="background:${currentPalette[colors[i]].hexCode}"></section>
-}
+
 //if a user clicks savePaletteButton, we want the palette to add mini palette
 // to its class list. THEN display to savedPaletteSection

@@ -15,7 +15,10 @@ var savedPaletteSection = document.querySelector('.saved-palette-display')
 //event listeners -------------------->
 window.addEventListener('load', displayRandomPalette)
 // on page load, create new instance of Palette
-newPaletteButton.addEventListener('click', displayRandomPalette)
+newPaletteButton.addEventListener('click', function() {
+  newColorSet(currentPalette)
+})
+
 savePaletteButton.addEventListener('click', displaySavedPalette)
 // window.addEventListener('click', function () {
 //   currentPalette.lockColor();
@@ -123,6 +126,30 @@ function displayRandomPalette() {
     // console.log(colorBox[i].id.background)
 
   }
+}
+
+function newColorSet(currentPalette) {
+
+  currentPalette.color1 = new Color(makeRandomHex())
+  currentPalette.color2 = new Color(makeRandomHex())
+  currentPalette.color3 = new Color(makeRandomHex())
+  currentPalette.color4 = new Color(makeRandomHex())
+  currentPalette.color5 = new Color(makeRandomHex())
+  var colors = Object.keys(currentPalette)
+
+  colorDisplay.innerHTML = ''
+   for (var i = 0; i < 5; i++) {
+    console.log(currentPalette[colors[i]].hexCode)
+    colorDisplay.innerHTML += `
+    <div class="color-hex-lock" id="section${i + 1}">
+    <section class="color-box ${colors[i]}" style="background:${currentPalette[colors[i]].hexCode}"></section>
+    <div class="hex-lock">
+      <p class="hex-value" id="hex${i+1}">${currentPalette[colors[i]].hexCode}</p>
+      <button class="lock-button" id="unlock${i+1}">🔓</button>
+    </div>
+    </div>
+    `
+}
 }
 
 function displaySavedPalette() {

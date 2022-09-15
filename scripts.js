@@ -12,6 +12,7 @@ var colorBox = document.querySelectorAll('.color-box')
 var newPaletteButton = document.querySelector('#new-palette')
 var savePaletteButton =  document.querySelector('#save-palette')
 var savedPaletteSection = document.querySelector('.saved-palette-display')
+// var lockButtons = document.querySelectorAll('.lock-button')
 
 //event listeners -------------------->
 window.addEventListener('load', displayRandomPalette)
@@ -21,9 +22,9 @@ newPaletteButton.addEventListener('click', function() {
 })
 
 savePaletteButton.addEventListener('click', displaySavedPalette)
-// window.addEventListener('click', function () {
-//   currentPalette.lockColor();
-// });
+colorDisplay.addEventListener('click', function () {
+  currentPalette.lockColor();
+});
 // ^^^^replace window with new variable and uncomment
 
 
@@ -65,12 +66,13 @@ class Palette {
   lockColor() {
     var targetColorID = event.target.id
     var paletteKeys = Object.keys(this)
+    var lockButtons = document.querySelectorAll('.lock-button')  //still does not make sense to us
     // console.log(Object.keys(this));
     // console.log(paletteKeys[0]);
     // console.log(this["color1"]);
     // console.log(this.color1);
     // console.log(this["box1"].locked);
-    // console.log(targetColorID);
+    // console.log(event.target);
     for (var i = 0; i < paletteKeys.length-1; i++) {
       if (targetColorID === paletteKeys[i]) {
         // console.log(targetColorID === paletteKeys[i]);
@@ -79,27 +81,29 @@ class Palette {
         // console.log(paletteKeys[i]);
         // console.log(this[paletteKeys[i]].locked);
         this[paletteKeys[i]].locked = true;
+        lockButtons[i].innerText = '🔐'
       }
-    }
-  }
 
-  addNewColors() {
-    if (this.color1.locked === false) {
-      this.color1 = new Color(makeRandomHex())
-    }
-    if (this.color2.locked === false) {
-      this.color2 = new Color(makeRandomHex())
-    }
-    if (this.color3.locked === false) {
-      this.color3 = new Color(makeRandomHex())
-    }
-    if (this.color4.locked === false) {
-      this.color4 = new Color(makeRandomHex())
-    }
-    if (this.color5.locked === false) {
-      this.color5 = new Color(makeRandomHex())
     }
   }
+  //
+  // addNewColors() {
+  //   if (this.color1.locked === false) {
+  //     this.color1 = new Color(makeRandomHex())
+  //   }
+  //   if (this.color2.locked === false) {
+  //     this.color2 = new Color(makeRandomHex())
+  //   }
+  //   if (this.color3.locked === false) {
+  //     this.color3 = new Color(makeRandomHex())
+  //   }
+  //   if (this.color4.locked === false) {
+  //     this.color4 = new Color(makeRandomHex())
+  //   }
+  //   if (this.color5.locked === false) {
+  //     this.color5 = new Color(makeRandomHex())
+  //   }
+  // }
 
 }
 
@@ -109,10 +113,10 @@ function displayRandomPalette() {
 
   colorDisplay.innerHTML = ''
    for (var i = 0; i < 5; i++) {
-    console.log(currentPalette[colors[i]].hexCode)
+    // console.log(currentPalette[colors[i]].hexCode)
     colorDisplay.innerHTML += `
     <div class="color-hex-lock" id="section${i + 1}">
-    <section class="color-box ${colors[i]}" style="background:${currentPalette[colors[i]].hexCode}"></section>
+    <section class="color-box ${colors[i]}" style="background:${currentPalette[colors[i]].hexCode}" id="${colors[i]}"></section>
     <div class="hex-lock">
       <p class="hex-value" id="hex${i+1}">${currentPalette[colors[i]].hexCode}</p>
       <button class="lock-button" id="unlock${i+1}">🔓</button>
@@ -131,19 +135,30 @@ function displayRandomPalette() {
 
 function newColorSet(currentPalette) {
 
+  if (currentPalette.color1.locked === false){
   currentPalette.color1 = new Color(makeRandomHex())
+  }
+  if (currentPalette.color2.locked === false) {
   currentPalette.color2 = new Color(makeRandomHex())
+  }
+  if (currentPalette.color3.locked === false) {
   currentPalette.color3 = new Color(makeRandomHex())
+  }
+  if (currentPalette.color4.locked === false) {
   currentPalette.color4 = new Color(makeRandomHex())
+  }
+  if (currentPalette.color5.locked === false) {
   currentPalette.color5 = new Color(makeRandomHex())
+  }
+
   var colors = Object.keys(currentPalette)
 
   colorDisplay.innerHTML = ''
    for (var i = 0; i < 5; i++) {
-    console.log(currentPalette[colors[i]].hexCode)
+    // console.log(currentPalette[colors[i]].hexCode)
     colorDisplay.innerHTML += `
     <div class="color-hex-lock" id="section${i + 1}">
-    <section class="color-box ${colors[i]}" style="background:${currentPalette[colors[i]].hexCode}"></section>
+    <section class="color-box ${colors[i]}" style="background:${currentPalette[colors[i]].hexCode}" id="${colors[i]}"></section>
     <div class="hex-lock">
       <p class="hex-value" id="hex${i+1}">${currentPalette[colors[i]].hexCode}</p>
       <button class="lock-button" id="unlock${i+1}">🔓</button>
@@ -167,6 +182,7 @@ function displaySavedPalette() {
   <button class="delete-button lock-button mini-palette">🗑</button>
   </div>`
 }
+
 displayRandomPalette()
 }
 

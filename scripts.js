@@ -10,7 +10,7 @@ var colorDisplay = document.querySelector('.color-display')
 var colorBox = document.querySelectorAll('.color-box')
 var newPaletteButton = document.querySelector('#new-palette')
 var savePaletteButton =  document.querySelector('#save-palette')
-var savedPaletteSection = document.querySelector('.saved-palette-section')
+var savedPaletteSection = document.querySelector('.saved-palette-display')
 
 //event listeners -------------------->
 window.addEventListener('load', displayRandomPalette)
@@ -126,11 +126,18 @@ function displayRandomPalette() {
 }
 
 function displaySavedPalette() {
-    savedPaletteSection.innerHTML +=
-    `
-        <section class="color-box ${colors[i]} mini-palette" style="background:${currentPalette[colors[i]].hexCode}"></section>
+  savedPaletteSection.innerHTML +=
+    `<div class="palette-group">
+        <section class="color-box mini-palette" id="color4"></section>
+        <section class="color-box mini-palette" id="color4"></section>
+        <section class="color-box mini-palette" id="color4"></section>
+        <section class="color-box mini-palette" id="color4"></section>
+        <section class="color-box mini-palette" id="color4"></section>
+        <button class="delete-button lock-button mini-palette">🗑</button>
+    </div>`
 
-      `
+
+    // `<section class="color-box ${colors[i]} mini-palette" style="background:${currentPalette[colors[i]].hexCode}"></section>
 }
 //if a user clicks savePaletteButton, we want the palette to add mini palette
 // to its class list. THEN display to savedPaletteSection

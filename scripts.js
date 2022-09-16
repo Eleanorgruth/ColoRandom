@@ -44,6 +44,7 @@ class Color {
   constructor(hexFunction) {
     this.locked = false;
     this.hexCode = hexFunction;
+    this.lockSymbol = '🔓'
   }
 }
 
@@ -59,17 +60,29 @@ class Palette {
   lockColor() {
     var targetColorID = event.target.id
     var paletteKeys = Object.keys(this)
-    var lockButtons = document.querySelectorAll('.lock-button')  //still does not make sense to us
-    for (var i = 0; i < paletteKeys.length-1; i++) {
+
+    for (var i = 0; i < 5; i++) {
       if (targetColorID === paletteKeys[i] && this[paletteKeys[i]].locked === false) {
         this[paletteKeys[i]].locked = true;
-        lockButtons[i].innerText = '🔐'
+        this[paletteKeys[i]].lockSymbol = '🔐'
       } else if (targetColorID === paletteKeys[i] && this[paletteKeys[i]].locked === true) {
         this[paletteKeys[i]].locked = false;
-        lockButtons[i].innerText = '🔓'
+        this[paletteKeys[i]].lockSymbol = '🔓'
       }
-
     }
+    colorDisplay.innerHTML = ''
+    var colors = Object.keys(this)
+    for (var i = 0; i < 5; i++) {
+     colorDisplay.innerHTML += `
+     <div class="color-hex-lock" id="section${i + 1}">
+     <section class="color-box ${colors[i]}" style="background:${this[colors[i]].hexCode}" id="${colors[i]}"></section>
+     <div class="hex-lock">
+       <p class="hex-value" id="hex${i+1}">${this[colors[i]].hexCode}</p>
+       <button class="lock-button" id="unlock${i+1}">${this[colors[i]].lockSymbol}</button>
+     </div>
+     </div>
+     `
+   }
   }
 
 }
@@ -85,7 +98,7 @@ function displayRandomPalette() {
     <section class="color-box ${colors[i]}" style="background:${currentPalette[colors[i]].hexCode}" id="${colors[i]}"></section>
     <div class="hex-lock">
       <p class="hex-value" id="hex${i+1}">${currentPalette[colors[i]].hexCode}</p>
-      <button class="lock-button" id="unlock${i+1}">🔓</button>
+      <button class="lock-button" id="unlock${i+1}">${currentPalette[colors[i]].lockSymbol}</button>
     </div>
     </div>
     `
@@ -119,7 +132,7 @@ function newColorSet(currentPalette) {
     <section class="color-box ${colors[i]}" style="background:${currentPalette[colors[i]].hexCode}" id="${colors[i]}"></section>
     <div class="hex-lock">
       <p class="hex-value" id="hex${i+1}">${currentPalette[colors[i]].hexCode}</p>
-      <button class="lock-button" id="unlock${i+1}">🔓</button>
+      <button class="lock-button" id="unlock${i+1}">${currentPalette[colors[i]].lockSymbol}</button>
     </div>
     </div>
     `

@@ -1,6 +1,3 @@
-/* * {
-  border: 2px solid red
-} */
 body {
   display: flex;
   flex-direction: row;
@@ -28,27 +25,9 @@ body {
   border: 2px solid;
   height: 120px;
   width: 120px;
+  cursor: pointer;
 }
 
-#color1 {
-  background: ;
-}
-
-#color2 {
-  background: #8ACB88;
-}
-
-#color3 {
-  background: #648381;
-}
-
-#color4 {
-  background: #575761;
-}
-
-#color5 {
- background: #FFBF46;
-}
 .color-hex-lock {
   display: flex;
   flex-direction: column;
@@ -61,7 +40,7 @@ body {
   width: 100%;
 }
 
-.lock-button {
+.lock-status {
   background: none;
   border: none;
   font-size: 1.5em;
@@ -74,6 +53,7 @@ body {
 
 .hex-lock {
   display: flex;
+  align-items: center;
 }
 
 .saved-palette-section {
@@ -88,7 +68,6 @@ body {
 
 .saved-palette-display{
   display: flex;
-  display: column;
   justify-content: space-around;
   width: 100%;
   height: 100%;
@@ -104,9 +83,17 @@ body {
   align-items: center;
 }
 
-
 .mini-palette {
   display: flex;
   height: 30px;
   width: 30px;
+}
+
+button {
+  cursor: pointer;
+}
+
+.delete-button {
+  background-color: transparent;
+  border: none;
 }

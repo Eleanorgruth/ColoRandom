@@ -17,7 +17,7 @@ savePaletteButton.addEventListener('click', displaySavedPalette)
 colorDisplay.addEventListener('click', function () {
   currentPalette.lockColor()
 })
-
+savedPaletteDisplay.addEventListener('click', deleteSavedPalette)
 
 function makeRandomNumber(array) {
   return Math.floor(Math.random() * hexArray.length);
@@ -129,15 +129,36 @@ function displaySavedPalette() {
   savedPaletteDisplay.innerHTML = ""
   for (var i = 0; i < savedPalettes.length; i++) {
   savedPaletteDisplay.innerHTML +=
-  `<div class="palette-group">
+  `<div class="palette-group" id="${savedPalettes[i].ID}">
     <section class="color-box mini-palette" style="background:${savedPalettes[i].color1.hexCode}"></section>
     <section class="color-box mini-palette" style="background:${savedPalettes[i].color2.hexCode}"></section>
     <section class="color-box mini-palette" style="background:${savedPalettes[i].color3.hexCode}"></section>
     <section class="color-box mini-palette" style="background:${savedPalettes[i].color4.hexCode}"></section>
     <section class="color-box mini-palette" style="background:${savedPalettes[i].color5.hexCode}"></section>
-    <button class="delete-button lock-button mini-palette">🗑</button>
+    <button class="delete-button lock-button mini-palette" id="deleteButton">🗑</button>
   </div>`
+  }
+  displayRandomPalette()
 }
 
-displayRandomPalette()
+function deleteSavedPalette() {
+  var targetDeleteID = event.target.id
+  var targetDeleteParent = event.target.parentElement
+  for (var i = 0; i < savedPalettes.length; i++) {
+    if (targetDeleteID==="deleteButton" && savedPalettes[i].ID.toString() === targetDeleteParent.id) {
+      savedPalettes.splice(i, 1)
+    }
+  }
+  savedPaletteDisplay.innerHTML = ""
+  for (var i = 0; i < savedPalettes.length; i++) {
+  savedPaletteDisplay.innerHTML +=
+  `<div class="palette-group" id="${savedPalettes[i].ID}">
+    <section class="color-box mini-palette" style="background:${savedPalettes[i].color1.hexCode}"></section>
+    <section class="color-box mini-palette" style="background:${savedPalettes[i].color2.hexCode}"></section>
+    <section class="color-box mini-palette" style="background:${savedPalettes[i].color3.hexCode}"></section>
+    <section class="color-box mini-palette" style="background:${savedPalettes[i].color4.hexCode}"></section>
+    <section class="color-box mini-palette" style="background:${savedPalettes[i].color5.hexCode}"></section>
+    <button class="delete-button lock-button mini-palette" id="deleteButton">🗑</button>
+  </div>`
+}
 }

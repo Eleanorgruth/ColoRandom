@@ -12,6 +12,7 @@ var colorBox = document.querySelectorAll('.color-box')
 var newPaletteButton = document.querySelector('#new-palette')
 var savePaletteButton =  document.querySelector('#save-palette')
 var savedPaletteSection = document.querySelector('.saved-palette-display')
+// var lockButtons = document.querySelectorAll('.lock-button')
 
 //event listeners -------------------->
 window.addEventListener('load', displayRandomPalette)
@@ -21,10 +22,10 @@ newPaletteButton.addEventListener('click', function() {
 })
 
 savePaletteButton.addEventListener('click', displaySavedPalette)
-// window.addEventListener('click', function () {
-//   currentPalette.lockColor();
-// });
-// ^^^^replace window with new variable and uncomment
+colorDisplay.addEventListener('click', function () {
+  currentPalette.lockColor();
+});
+
 
 
 function makeRandomNumber(array) {
@@ -43,14 +44,8 @@ class Color {
   constructor(hexFunction) {
     this.locked = false;
     this.hexCode = hexFunction;
+    this.lockSymbol = '🔓'
   }
-  // makeRandomHex() {
-  //   var randomHex = ['#'];
-  //   for (var i = 0; i < 6; i++) {
-  //     randomHex.push(hexArray[makeRandomNumber(hexArray)]);
-  //     this.hexCode = randomHex.join('');
-  //   }
-  // }
 }
 
 class Palette {
@@ -65,40 +60,29 @@ class Palette {
   lockColor() {
     var targetColorID = event.target.id
     var paletteKeys = Object.keys(this)
-    // console.log(Object.keys(this));
-    // console.log(paletteKeys[0]);
-    // console.log(this["color1"]);
-    // console.log(this.color1);
-    // console.log(this["box1"].locked);
-    // console.log(targetColorID);
-    for (var i = 0; i < paletteKeys.length-1; i++) {
-      if (targetColorID === paletteKeys[i]) {
-        // console.log(targetColorID === paletteKeys[i]);
-        // console.log(i);
-        // console.log(targetColorID);
-        // console.log(paletteKeys[i]);
-        // console.log(this[paletteKeys[i]].locked);
+
+    for (var i = 0; i < 5; i++) {
+      if (targetColorID === paletteKeys[i] && this[paletteKeys[i]].locked === false) {
         this[paletteKeys[i]].locked = true;
+        this[paletteKeys[i]].lockSymbol = '🔐'
+      } else if (targetColorID === paletteKeys[i] && this[paletteKeys[i]].locked === true) {
+        this[paletteKeys[i]].locked = false;
+        this[paletteKeys[i]].lockSymbol = '🔓'
       }
     }
-  }
-
-  addNewColors() {
-    if (this.color1.locked === false) {
-      this.color1 = new Color(makeRandomHex())
-    }
-    if (this.color2.locked === false) {
-      this.color2 = new Color(makeRandomHex())
-    }
-    if (this.color3.locked === false) {
-      this.color3 = new Color(makeRandomHex())
-    }
-    if (this.color4.locked === false) {
-      this.color4 = new Color(makeRandomHex())
-    }
-    if (this.color5.locked === false) {
-      this.color5 = new Color(makeRandomHex())
-    }
+    colorDisplay.innerHTML = ''
+    var colors = Object.keys(this)
+    for (var i = 0; i < 5; i++) {
+     colorDisplay.innerHTML += `
+     <div class="color-hex-lock" id="section${i + 1}">
+     <section class="color-box ${colors[i]}" style="background:${this[colors[i]].hexCode}" id="${colors[i]}"></section>
+     <div class="hex-lock">
+       <p class="hex-value" id="hex${i+1}">${this[colors[i]].hexCode}</p>
+       <button class="lock-button" id="unlock${i+1}">${this[colors[i]].lockSymbol}</button>
+     </div>
+     </div>
+     `
+   }
   }
 
 }
@@ -109,44 +93,46 @@ function displayRandomPalette() {
 
   colorDisplay.innerHTML = ''
    for (var i = 0; i < 5; i++) {
-    console.log(currentPalette[colors[i]].hexCode)
     colorDisplay.innerHTML += `
     <div class="color-hex-lock" id="section${i + 1}">
-    <section class="color-box ${colors[i]}" style="background:${currentPalette[colors[i]].hexCode}"></section>
+    <section class="color-box ${colors[i]}" style="background:${currentPalette[colors[i]].hexCode}" id="${colors[i]}"></section>
     <div class="hex-lock">
       <p class="hex-value" id="hex${i+1}">${currentPalette[colors[i]].hexCode}</p>
-      <button class="lock-button" id="unlock${i+1}">🔓</button>
+      <button class="lock-button" id="unlock${i+1}">${currentPalette[colors[i]].lockSymbol}</button>
     </div>
     </div>
     `
-    // colorBox[i].styles.backgroundColor = `${currentPalette[colors[i]].hexCode}`
-    // console.log(colorBox[i].style.backgroundColor)
-    // console.log(`${currentPalette[colors[i]].hexCode}`)
-    // console.log(`before: ${colorBox[i].id.background}`)
-    // colorBox[i].id.background = `${currentPalette[colors[i]].hexCode}`
-    // console.log(colorBox[i].id.background)
-
   }
 }
 
 function newColorSet(currentPalette) {
 
+  if (currentPalette.color1.locked === false){
   currentPalette.color1 = new Color(makeRandomHex())
+  }
+  if (currentPalette.color2.locked === false) {
   currentPalette.color2 = new Color(makeRandomHex())
+  }
+  if (currentPalette.color3.locked === false) {
   currentPalette.color3 = new Color(makeRandomHex())
+  }
+  if (currentPalette.color4.locked === false) {
   currentPalette.color4 = new Color(makeRandomHex())
+  }
+  if (currentPalette.color5.locked === false) {
   currentPalette.color5 = new Color(makeRandomHex())
+  }
+
   var colors = Object.keys(currentPalette)
 
   colorDisplay.innerHTML = ''
    for (var i = 0; i < 5; i++) {
-    console.log(currentPalette[colors[i]].hexCode)
     colorDisplay.innerHTML += `
     <div class="color-hex-lock" id="section${i + 1}">
-    <section class="color-box ${colors[i]}" style="background:${currentPalette[colors[i]].hexCode}"></section>
+    <section class="color-box ${colors[i]}" style="background:${currentPalette[colors[i]].hexCode}" id="${colors[i]}"></section>
     <div class="hex-lock">
       <p class="hex-value" id="hex${i+1}">${currentPalette[colors[i]].hexCode}</p>
-      <button class="lock-button" id="unlock${i+1}">🔓</button>
+      <button class="lock-button" id="unlock${i+1}">${currentPalette[colors[i]].lockSymbol}</button>
     </div>
     </div>
     `
@@ -167,6 +153,7 @@ function displaySavedPalette() {
   <button class="delete-button lock-button mini-palette">🗑</button>
   </div>`
 }
+
 displayRandomPalette()
 }
 

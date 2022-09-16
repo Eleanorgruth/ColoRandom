@@ -1,31 +1,22 @@
-//global and query stuf ------------------------->
-
-var hexArray = ['A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']  //does this need to be inside Color class?
-
+var hexArray = ['A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 var currentPalette
-//this is our data model
-var randomHex
 var savedPalettes = []
 
-var colorDisplay = document.querySelector('.color-display')
+var colorDisplay = document.querySelector('.main-color-display')
 var colorBox = document.querySelectorAll('.color-box')
 var newPaletteButton = document.querySelector('#new-palette')
 var savePaletteButton =  document.querySelector('#save-palette')
-var savedPaletteSection = document.querySelector('.saved-palette-display')
-// var lockButtons = document.querySelectorAll('.lock-button')
+var savedPaletteDisplay = document.querySelector('.saved-palette-display')
 
-//event listeners -------------------->
+
 window.addEventListener('load', displayRandomPalette)
-// on page load, create new instance of Palette
 newPaletteButton.addEventListener('click', function() {
   newColorSet(currentPalette)
 })
-
 savePaletteButton.addEventListener('click', displaySavedPalette)
 colorDisplay.addEventListener('click', function () {
-  currentPalette.lockColor();
-});
-
+  currentPalette.lockColor()
+})
 
 
 function makeRandomNumber(array) {
@@ -36,8 +27,7 @@ function makeRandomHex() {
   var randomHex = ['#'];
   for (var i = 0; i < 6; i++) {
     randomHex.push(hexArray[makeRandomNumber(hexArray)]);
-  }
-  return randomHex.join('')
+  } return randomHex.join('')
 }
 
 class Color {
@@ -62,46 +52,42 @@ class Palette {
     var paletteKeys = Object.keys(this)
 
     for (var i = 0; i < 5; i++) {
-      if (targetColorID === paletteKeys[i] && this[paletteKeys[i]].locked === false) {
-        this[paletteKeys[i]].locked = true;
+      if (targetColorID === paletteKeys[i] && !this[paletteKeys[i]].locked) {
+        this[paletteKeys[i]].locked = true
         this[paletteKeys[i]].lockSymbol = '🔐'
-      } else if (targetColorID === paletteKeys[i] && this[paletteKeys[i]].locked === true) {
-        this[paletteKeys[i]].locked = false;
+      } else if (targetColorID === paletteKeys[i] && this[paletteKeys[i]].locked) {
+        this[paletteKeys[i]].locked = false
         this[paletteKeys[i]].lockSymbol = '🔓'
       }
     }
     colorDisplay.innerHTML = ''
     var colors = Object.keys(this)
     for (var i = 0; i < 5; i++) {
-     colorDisplay.innerHTML += `
-     <div class="color-hex-lock" id="section${i + 1}">
+     colorDisplay.innerHTML +=
+     `<div class="color-hex-lock" id="section${i + 1}">
      <section class="color-box ${colors[i]}" style="background:${this[colors[i]].hexCode}" id="${colors[i]}"></section>
      <div class="hex-lock">
        <p class="hex-value" id="hex${i+1}">${this[colors[i]].hexCode}</p>
        <button class="lock-button" id="unlock${i+1}">${this[colors[i]].lockSymbol}</button>
      </div>
-     </div>
-     `
+     </div>`
    }
   }
-
 }
 
 function displayRandomPalette() {
   currentPalette = new Palette()
   var colors = Object.keys(currentPalette)
-
   colorDisplay.innerHTML = ''
    for (var i = 0; i < 5; i++) {
-    colorDisplay.innerHTML += `
-    <div class="color-hex-lock" id="section${i + 1}">
-    <section class="color-box ${colors[i]}" style="background:${currentPalette[colors[i]].hexCode}" id="${colors[i]}"></section>
-    <div class="hex-lock">
-      <p class="hex-value" id="hex${i+1}">${currentPalette[colors[i]].hexCode}</p>
-      <button class="lock-button" id="unlock${i+1}">${currentPalette[colors[i]].lockSymbol}</button>
-    </div>
-    </div>
-    `
+    colorDisplay.innerHTML +=
+    `<div class="color-hex-lock" id="section${i + 1}">
+      <section class="color-box ${colors[i]}" style="background:${currentPalette[colors[i]].hexCode}" id="${colors[i]}"></section>
+      <div class="hex-lock">
+        <p class="hex-value" id="hex${i+1}">${currentPalette[colors[i]].hexCode}</p>
+        <button class="lock-button" id="unlock${i+1}">${currentPalette[colors[i]].lockSymbol}</button>
+      </div>
+    </div>`
   }
 }
 
@@ -127,40 +113,31 @@ function newColorSet(currentPalette) {
 
   colorDisplay.innerHTML = ''
    for (var i = 0; i < 5; i++) {
-    colorDisplay.innerHTML += `
-    <div class="color-hex-lock" id="section${i + 1}">
-    <section class="color-box ${colors[i]}" style="background:${currentPalette[colors[i]].hexCode}" id="${colors[i]}"></section>
-    <div class="hex-lock">
-      <p class="hex-value" id="hex${i+1}">${currentPalette[colors[i]].hexCode}</p>
-      <button class="lock-button" id="unlock${i+1}">${currentPalette[colors[i]].lockSymbol}</button>
-    </div>
-    </div>
-    `
-}
+    colorDisplay.innerHTML +=
+    `<div class="color-hex-lock" id="section${i + 1}">
+      <section class="color-box ${colors[i]}" style="background:${currentPalette[colors[i]].hexCode}" id="${colors[i]}"></section>
+      <div class="hex-lock">
+        <p class="hex-value" id="hex${i+1}">${currentPalette[colors[i]].hexCode}</p>
+        <button class="lock-button" id="unlock${i+1}">${currentPalette[colors[i]].lockSymbol}</button>
+      </div>
+    </div>`
+  }
 }
 
 function displaySavedPalette() {
   savedPalettes.push(currentPalette)
-  savedPaletteSection.innerHTML = ""
+  savedPaletteDisplay.innerHTML = ""
   for (var i = 0; i < savedPalettes.length; i++) {
-  savedPaletteSection.innerHTML +=
+  savedPaletteDisplay.innerHTML +=
   `<div class="palette-group">
-  <section class="color-box mini-palette" style="background:${savedPalettes[i].color1.hexCode}"></section>
-  <section class="color-box mini-palette" style="background:${savedPalettes[i].color2.hexCode}"></section>
-  <section class="color-box mini-palette" style="background:${savedPalettes[i].color3.hexCode}"></section>
-  <section class="color-box mini-palette" style="background:${savedPalettes[i].color4.hexCode}"></section>
-  <section class="color-box mini-palette" style="background:${savedPalettes[i].color5.hexCode}"></section>
-  <button class="delete-button lock-button mini-palette">🗑</button>
+    <section class="color-box mini-palette" style="background:${savedPalettes[i].color1.hexCode}"></section>
+    <section class="color-box mini-palette" style="background:${savedPalettes[i].color2.hexCode}"></section>
+    <section class="color-box mini-palette" style="background:${savedPalettes[i].color3.hexCode}"></section>
+    <section class="color-box mini-palette" style="background:${savedPalettes[i].color4.hexCode}"></section>
+    <section class="color-box mini-palette" style="background:${savedPalettes[i].color5.hexCode}"></section>
+    <button class="delete-button lock-button mini-palette">🗑</button>
   </div>`
 }
 
 displayRandomPalette()
 }
-
-
-//when user clicks the savedPalette button, there are duplicates - revisit
-
-    // `<section class="color-box ${colors[i]} mini-palette" style="background:${currentPalette[colors[i]].hexCode}"></section>
-
-//if a user clicks savePaletteButton, we want the palette to add mini palette
-// to its class list. THEN display to savedPaletteSection

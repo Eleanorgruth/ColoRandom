@@ -16,7 +16,7 @@ body {
   justify-content: space-evenly;
 }
 
-.color-display {
+.main-color-display {
   display: flex;
   justify-content: space-around;
   width: 100%;

@@ -1,7 +1,8 @@
 # Colorandom
 
 ## Abstract:
-ColoRandom is a web app that displayes a palette of five colors on page load and when a user clicks the Display new Palette button. If the user likes a palette that gets displayed, they can save the palette to the saved palette display on the right side.
+ColoRandom is a web app that displayes a palette of five colors on page load and when a user clicks the Display new Palette button. If the user likes a palette that gets displayed, they can save the palette to the saved palette display on the right side. Preview the ColoRandom app <a href="https://eleanorgruth.github.io/ColoRandom/">here</a>.
+
 
 ## Installation:
 1. Fork the `ColoRandom` repository
